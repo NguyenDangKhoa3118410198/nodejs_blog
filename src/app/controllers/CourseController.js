@@ -25,6 +25,20 @@ class CourseController {
             .then(() => res.redirect('/'))
             .catch((error) => {});
     }
+
+    async edit(req, res, next) {
+        await Course.findById(req.params.id)
+            .then((course) =>
+                res.render('courses/edit', { course: mongooseToObject(course) })
+            )
+            .catch(next);
+    }
+
+    async update(req, res, next) {
+        await Course.updateOne({ _id: req.params.id }, req.body)
+            .then((course) => res.redirect('/me/stored/courses'))
+            .catch(next);
+    }
 }
 
 module.exports = new CourseController();
