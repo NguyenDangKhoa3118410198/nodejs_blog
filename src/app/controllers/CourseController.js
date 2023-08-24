@@ -57,6 +57,18 @@ class CourseController {
             .then(() => res.redirect('back'))
             .catch(next)
     }
+
+    async handleFormActions(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                await Course.delete({ _id: { $in: req.body.courseIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next)
+                break
+            default:
+                res.json({ message: 'Action is invalid' })
+        }
+    }
 }
 
 module.exports = new CourseController()
