@@ -23,7 +23,7 @@ class CourseController {
         await course
             .save()
             .then(() => res.redirect('/me/stored/courses'))
-            .catch((error) => {})
+            .catch(next)
     }
 
     async edit(req, res, next) {
